@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 
 const initialFormData = {
@@ -14,15 +14,20 @@ function App() {
   // Definisce uno stato chiamato 'title' 
   const [articles, setArticles] = useState([]);
   const [formData, setFormData] = useState(initialFormData);
+  const [availableMessage, setAvailableMessage] = useState("");
+
+useEffect(() => {
+  if (formData.available) {
+    setAvailableMessage("L'articolo verrà pubblicato")
+    
+  }else{
+    setAvailableMessage("Attenzione, l'articolo non verrà pubblicato")
+  }
+
+}, [formData.available])
 
 
-
-
-
-
-
-
-  // Funzione per gestire il cambiamento del valore dell'input
+// Funzione per gestire il cambiamento del valore dell'input
   const handleInputChange = (event) => {
     const keyToChange = event.target.name;
 
@@ -161,7 +166,7 @@ function App() {
                   checked={formData.available}
                   onChange={handleInputChange}
                 />
-                <div></div>
+                <div>{availableMessage}</div>
               </div>
 
               <button type="submit" className="btn btn-success">Aggiungi</button>
